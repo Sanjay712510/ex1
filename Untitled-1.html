@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Online Shopping Store</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background-image:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url('https://images.unsplash.com/photo-1607082349566-187342175e2f');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+}
+
+header{
+    background:rgba(0,119,204,0.9);
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+header h1{
+    font-size:40px;
+}
+
+nav{
+    background:rgba(0,0,0,0.85);
+    text-align:center;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 15px;
+    font-weight:bold;
+}
+
+.container{
+    padding:30px;
+}
+
+.section-title{
+    text-align:center;
+    color:white;
+    margin-bottom:20px;
+    font-size:32px;
+}
+
+.products{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+}
+
+.product{
+    width:260px;
+    background:rgba(255,255,255,0.95);
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    transition:0.3s;
+    cursor:grab;
+}
+
+.product:hover{
+    transform:translateY(-8px) scale(1.03);
+}
+
+.product img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.product h3{
+    text-align:center;
+    margin-top:10px;
+}
+
+.product p{
+    text-align:center;
+    color:#0077cc;
+    font-size:20px;
+    font-weight:bold;
+    margin:10px;
+}
+
+.cart{
+    width:450px;
+    min-height:220px;
+    margin:40px auto;
+    background:rgba(255,255,255,0.95);
+    border:4px dashed #0077cc;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.cart h2{
+    color:#0077cc;
+    margin-bottom:10px;
+}
+
+#cartItems p{
+    background:#e8f4ff;
+    padding:8px;
+    margin:8px;
+    border-radius:6px;
+}
+
+form{
+    max-width:550px;
+    margin:30px auto;
+    background:rgba(255,255,255,0.95);
+    padding:25px;
+    border-radius:15px;
+}
+
+form h2{
+    text-align:center;
+    margin-bottom:15px;
+    color:#0077cc;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+input[type="submit"]{
+    background:#0077cc;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+}
+
+input[type="submit"]:hover{
+    background:#005fa3;
+}
+
+footer{
+    background:rgba(0,0,0,0.85);
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:30px;
+}
+</style>
+
+<script>
+function drag(event){
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function allowDrop(event){
+    event.preventDefault();
+}
+
+function drop(event){
+    event.preventDefault();
+
+    var data = event.dataTransfer.getData("text");
+    var item = document.getElementById(data);
+
+    var productName =
+    item.getElementsByTagName("h3")[0].innerHTML;
+
+    document.getElementById("cartItems").innerHTML +=
+    "<p>" + productName + "</p>";
+
+    localStorage.setItem(
+        "cartData",
+        document.getElementById("cartItems").innerHTML
+    );
+}
+
+window.onload = function(){
+    if(localStorage.getItem("cartData")){
+        document.getElementById("cartItems").innerHTML =
+        localStorage.getItem("cartData");
+    }
+}
+</script>
+
+</head>
+<body>
+
+<header>
+    <h1>🛒 Smart Online Shopping</h1>
+    <p>Drag Products into the Cart and Shop Easily</p>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Products</a>
+    <a href="#">Offers</a>
+    <a href="#">Categories</a>
+    <a href="#">Contact</a>
+</nav>
+
+<div class="container">
+
+<h2 class="section-title">Featured Products</h2>
+
+<div class="products">
+
+<div class="product" id="p1" draggable="true" ondragstart="drag(event)">
+    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400" alt="Phone">
+    <h3>Smart Phone</h3>
+    <p>₹15,999</p>
+</div>
+
+<div class="product" id="p2" draggable="true" ondragstart="drag(event)">
+    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400" alt="Laptop">
+    <h3>Laptop</h3>
+    <p>₹49,999</p>
+</div>
+
+<div class="product" id="p3" draggable="true" ondragstart="drag(event)">
+    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" alt="Headphones">
+    <h3>Headphones</h3>
+    <p>₹1,999</p>
+</div>
+
+<div class="product" id="p4" draggable="true" ondragstart="drag(event)">
+    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" alt="Shoes">
+    <h3>Sports Shoes</h3>
+    <p>₹2,499</p>
+</div>
+
+<div class="product" id="p5" draggable="true" ondragstart="drag(event)">
+    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Watch">
+    <h3>Smart Watch</h3>
+    <p>₹3,999</p>
+</div>
+
+<div class="product" id="p6" draggable="true" ondragstart="drag(event)">
+    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400" alt="Camera">
+    <h3>Digital Camera</h3>
+    <p>₹24,999</p>
+</div>
+
+</div>
+
+<div class="cart"
+     ondrop="drop(event)"
+     ondragover="allowDrop(event)">
+    <h2>🛒 Shopping Cart</h2>
+    <p>Drag products here</p>
+    <div id="cartItems"></div>
+</div>
+
+<form>
+    <h2>Customer Registration</h2>
+
+    <input type="text" placeholder="Full Name" required>
+
+    <input type="email" placeholder="Email Address" required>
+
+    <input type="tel" placeholder="Phone Number" required>
+
+    <input type="date" required>
+
+    <input type="search" placeholder="Search Products">
+
+    <input type="submit" value="Register">
+</form>
+
+</div><section style="text-align:center; margin:30px;">
+    <div style="background:rgba(255,255,255,0.95); padding:20px; border-radius:15px; max-width:700px; margin:auto;">
+        <h2>🗺️ Product Categories (Image Mapping)</h2>
+
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=700"
+             alt="Shopping Categories"
+             usemap="#shopmap"
+             width="600">
+
+        <map name="shopmap">
+            <area shape="rect"
+                  coords="0,0,200,300"
+                  href="#"
+                  alt="Electronics">
+
+            <area shape="rect"
+                  coords="200,0,400,300"
+                  href="#"
+                  alt="Fashion">
+
+            <area shape="rect"
+                  coords="400,0,600,300"
+                  href="#"
+                  alt="Accessories">
+        </map>
+
+        <p>Click different areas of the image to represent categories.</p>
+    </div>
+</section>
+<section style="text-align:center; margin:30px;">
+    <div style="background:rgba(255,255,255,0.95); padding:20px; border-radius:15px; max-width:500px; margin:auto;">
+        <h2> Find Your Location</h2>
+        <button onclick="getLocation()" style="padding:10px 20px; margin:10px; background:#0077cc; color:white; border:none; border-radius:5px;">
+            Get Location
+        </button>
+        <p id="location"></p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Smart Online Shopping Store | HTML5 Advanced Features Project</p>
+</footer>
+
+</body>
+</html>
